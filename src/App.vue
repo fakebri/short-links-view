@@ -2,7 +2,8 @@
   <div id="app">
     <nav v-if="!$route.meta.hideNav">
       <router-link to="/">主页</router-link> |
-      <router-link to="/login">登录</router-link>
+      <router-link to="/login">登录</router-link> |
+      <a href="http://localhost:8080/shortlinks/swagger-ui/index.html" target="_blank">API文档</a>
     </nav>
     <router-view/>
   </div>

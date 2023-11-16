@@ -13,17 +13,11 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import("@/views/LoginView.vue")
   },
   {
     path: '/admin',
     name: 'admin',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import("@/views/AdminView.vue"),
     beforeEnter: (to, from, next) => {
       // 在这个路由的独享守卫中进行操作
@@ -33,7 +27,29 @@ const routes = [
         next();
       }
     },
-    meta: { hideNav: true }
+    meta: { hideNav: true },
+    //设置嵌套路由
+    children: [
+      {
+        path: "/user/list",
+        component: () => import("@/views/user/List.vue"),
+        meta: { hideNav: true }
+
+      },
+      {
+        path: "/surl/list",
+        component: () => import("@/views/surl/List.vue"),
+        meta: { hideNav: true }
+      }
+    ]
+  },
+  {
+    path: '/test',
+    name: 'test',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("@/views/TestView.vue")
   }
 ]
 

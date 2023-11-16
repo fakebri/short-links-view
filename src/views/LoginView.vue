@@ -78,13 +78,13 @@ export default {
             password: this.userForm.password,
           })
             .then((message) => {
-              if (message!=null) {
+              if (message != null) {
                 this.$message({
                   message: "登录成功",
                   type: "success",
                 });
                 localStorage.setItem("user", JSON.stringify(message.data));
-                  this.$router.push("/admin");
+                this.$router.push("/admin");
               }
             })
             .catch((error) => {
@@ -102,6 +102,11 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+  },
+  created() {
+    if (localStorage.getItem("user") != null) {
+      this.$router.push("/admin");
+    }
   },
 };
 </script>
