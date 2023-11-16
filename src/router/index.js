@@ -25,6 +25,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import("@/views/AdminView.vue"),
+    beforeEnter: (to, from, next) => {
+      // 在这个路由的独享守卫中进行操作
+      if (localStorage.getItem("user") == null) {
+        next('/login');
+      } else {
+        next();
+      }
+    },
     meta: { hideNav: true }
   }
 ]
