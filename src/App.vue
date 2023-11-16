@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav>
+    <nav v-if="!$route.meta.hideNav">
       <router-link to="/">主页</router-link> |
       <router-link to="/login">登录</router-link>
     </nav>
