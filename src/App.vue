@@ -3,6 +3,7 @@
     <div class="bg" v-if="!$route.meta.hideNav">
       <img
         src="https://zuramai.github.io/starback.js/examples/snowfall/images/bg.png"
+
       />
     </div>
     <canvas class="background" ref="background"></canvas>
@@ -19,7 +20,7 @@
         >
         <el-menu-item index="4"
           ><a
-            href="http://localhost:8080/shortlinks/swagger-ui/index.html"
+            :href="API_BASE_URL+'/swagger-ui/index.html'"
             target="_blank"
             >API文档</a
           ></el-menu-item
@@ -72,7 +73,13 @@
 
 <script>
 import Starback from "starback";
+import { API_BASE_URL } from './constants/appConstants';
 export default {
+  data() {
+    return {
+      API_BASE_URL,
+    }
+  },
   mounted() {
     let canvas = this.$refs.background;
     const starback = new Starback(this.$refs.background, {

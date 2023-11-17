@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 5px">
-      <el-button type="primary"><router-link to="/user/add">添加</router-link></el-button>
+      <el-button type="primary" @click="dialogVisible = true">添加</el-button>
       <el-button type="danger" @click="batchDel">批量删除</el-button>
     </div>
     <el-table :data="tableData" ref="multipleTable" border max-height="700">
@@ -21,6 +21,30 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 对话框 -->
+    <el-dialog
+      title="添加用户"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <el-form :model="userAdd">
+        <el-form-item label="用户名称" >
+          <el-input v-model="userAdd.userName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="用户密码">
+          <el-input v-model="userAdd.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="用户头像">
+          <el-input v-model="userAdd.imgUrl" autocomplete="off" disabled></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addUser"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -54,8 +78,7 @@ export default {
         });
     },
     addUser() {
-      let data = {};
-      post("/shortlinks/admin/user/add", data)
+      post("/shortlinks/admin/user/add", this.userAdd)
         .then((res) => {
           if (res.message) {
             this.$alert(res.message, "用户名:", res.message.userName);
@@ -65,6 +88,7 @@ export default {
         .catch((error) => {
           this.$alert("添加失败，错误：" + error);
         });
+        this.dialogVisible = false;
     },
   },
   mounted() {
@@ -80,7 +104,8 @@ export default {
   data() {
     return {
       tableData: [],
-      dialogFormVisible: false,
+      dialogVisible: false,
+      userAdd: {},
     };
   },
   props: {},

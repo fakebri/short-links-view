@@ -1,16 +1,37 @@
 <template>
   <div>
     <p>hello</p>
-    <!-- <el-form :label-position="labelPosition" label-width="80px" :model="formAdd">
-      <el-form-item label="用户名称">
-        <el-input v-model="formAdd.userName"></el-input>
-      </el-form-item>
-      <el-form-item label="用户密码">
-        <el-input v-model="formAdd.passWord"></el-input>
-      </el-form-item>
-      <el-form-item label="用户头像">
-        <el-input v-model="formAdd.img" disabled></el-input>
-      </el-form-item>
-    </el-form> -->
+    
+    <el-card>
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+  <el-form-item label="审批人">
+    <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+  </el-form-item>
+  <el-form-item label="活动区域">
+    <el-select v-model="formInline.region" placeholder="活动区域">
+      <el-option label="区域一" value="shanghai"></el-option>
+      <el-option label="区域二" value="beijing"></el-option>
+    </el-select>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="onSubmit">查询</el-button>
+  </el-form-item>
+</el-form>
+    </el-card>
+   
   </div>
+  
 </template>
+
+<script>
+export default {
+  data() {
+      return {
+        formInline: {
+          user: '',
+          region: ''
+        }
+      }
+  }
+}
+</script>

@@ -42,7 +42,7 @@
                     show-word-limit
                     v-model="customShortUrl"
                   >
-                    <template slot="prepend">{{ API_BASE_URL }}</template>
+                    <template slot="prepend">{{ API_BASE_URL +"/s/" }}</template>
                   </el-input>
                 </div>
               </div>
@@ -140,8 +140,10 @@ export default {
       if (this.customShortUrl != "") {
         data.customShortUrl = API_BASE_URL + this.customShortUrl;
       } 
+      console.log(post);
       post("/shortlinks/short", data)
         .then((response) => {
+          console.log(response);
           this.shortUrl = response.data.shortUrl;
         })
         .catch((error) => {});

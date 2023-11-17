@@ -9,6 +9,7 @@
         router
         :collapse="false"
       >
+      <div v-if="userName" style="width:100%"><el-button type="danger" @click="logout">登出</el-button></div>
         <el-menu-item index="1" route="/user/list">
           <i class="el-icon-menu"></i>
           <span slot="title">用户管理</span>
@@ -72,6 +73,9 @@
       </el-menu>
     </div>
     <div class="content">
+      <h2 v-if="this.$route.path=='/admin'">
+      欢迎您，{{userName}} 
+      </h2>
       <router-view></router-view>
     </div>
   </div>
@@ -99,5 +103,29 @@
 
 <script>
 export default {
+  data(){
+    return{
+      userName: "",
+    }
+  },
+  created() {
+    let user = localStorage.getItem("user")
+    if (user) {
+      let data = JSON.parse(user);
+      this.userName = data.userName;
+    }
+  },
+  methods:{
+    logout(){
+      localStorage.clear();
+      this.$message({
+          message: '登出成功',
+          type: 'success'
+        });
+      setTimeout(() => {
+      this.$router.go("/login")
+      }, 500);
+    },
+  }
 };
 </script>
