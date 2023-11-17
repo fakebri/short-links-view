@@ -37,6 +37,12 @@ const routes = [
 
       },
       {
+        path: "/user/add",
+        component: () => import("@/views/user/Add.vue"),
+        meta: { hideNav: true }
+
+      },
+      {
         path: "/surl/list",
         component: () => import("@/views/surl/List.vue"),
         meta: { hideNav: true }

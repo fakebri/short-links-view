@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 5px">
-      <el-button type="primary">添加</el-button>
+      <el-button type="primary"><router-link to="/user/add">添加</router-link></el-button>
       <el-button type="danger" @click="batchDel">批量删除</el-button>
     </div>
     <el-table :data="tableData" ref="multipleTable" border max-height="700">
@@ -26,6 +26,7 @@
 
 <script>
 import { get, post } from "@/utils/request";
+
 export default {
   methods: {
     handleClick(row) {
@@ -40,17 +41,29 @@ export default {
         delArr.push(user.userId);
       });
       console.log(delArr);
-      post("/shortlinks/admin/user/del",{
-        "delUserIds" : delArr
+      post("/shortlinks/admin/user/del", {
+        delUserIds: delArr,
       })
         .then((res) => {
-          this.$alert("删除成功").then(()=>{
+          this.$alert("删除成功").then(() => {
             this.$router.go();
-          })
-          
+          });
         })
         .catch((error) => {
-          this.$alert("删除失败，错误："+error);
+          this.$alert("删除失败，错误：" + error);
+        });
+    },
+    addUser() {
+      let data = {};
+      post("/shortlinks/admin/user/add", data)
+        .then((res) => {
+          if (res.message) {
+            this.$alert(res.message, "用户名:", res.message.userName);
+            this.$router.go();
+          }
+        })
+        .catch((error) => {
+          this.$alert("添加失败，错误：" + error);
         });
     },
   },
@@ -67,7 +80,9 @@ export default {
   data() {
     return {
       tableData: [],
+      dialogFormVisible: false,
     };
   },
+  props: {},
 };
 </script>

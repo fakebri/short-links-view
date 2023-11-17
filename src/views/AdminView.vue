@@ -19,7 +19,7 @@
         </el-menu-item>
         <el-menu-item index="3" disabled>
           <i class="el-icon-document"></i>
-          <span slot="title">其他管理</span>
+          <span slot="title">统计数据</span>
         </el-menu-item>
         <el-menu-item index="4" disabled>
           <i class="el-icon-document"></i>
