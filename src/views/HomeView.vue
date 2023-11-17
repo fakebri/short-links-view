@@ -138,7 +138,7 @@ export default {
         expiresDays: 0,
       };
       if (this.customShortUrl != "") {
-        data.customShortUrl = API_BASE_URL + this.customShortUrl;
+        data.customShortUrl = API_BASE_URL +"/s/" + this.customShortUrl;
       } 
       console.log(post);
       post("/shortlinks/short", data)
