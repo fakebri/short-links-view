@@ -8,6 +8,7 @@
             v-model="originalUrl"
             clearable
             class="box-input"
+            autofocus
           >
             <el-button slot="append" icon="el-icon-link" @click="doShortUrl"
               >缩短</el-button
@@ -40,9 +41,7 @@
                     show-word-limit
                     v-model="customShortUrl"
                   >
-                    <template slot="prepend"
-                      >http://localhost:8080/shortlinks/s/</template
-                    >
+                    <template slot="prepend">{{ API_BASE_URL }}</template>
                   </el-input>
                 </div>
               </div>
@@ -97,6 +96,7 @@
 
 <script>
 import { get, post } from "@/utils/request.js";
+import { API_BASE_URL } from "@/constants/appConstants";
 export default {
   name: "HomeView",
   components: {},
@@ -107,17 +107,22 @@ export default {
       expireDate: "",
       disableShortUrl: true,
       activeTab: "short",
-      customShortUrl: ""
+      customShortUrl: "",
+      API_BASE_URL,
     };
   },
   mounted() {},
   methods: {
     doShortUrl() {
-      post("/shortlinks/short", {
+      let data = {
         originalUrl: this.originalUrl,
-        customShortUrl: null,
+        customShortUrl: this.customShortUrl,
         expiresDays: 0,
-      })
+      };
+      if (this.customShortUrl != "") {
+        data.customShortUrl = API_BASE_URL + this.customShortUrl;
+      } 
+      post("/shortlinks/short", data)
         .then((response) => {
           this.shortUrl = response.data.shortUrl;
         })
