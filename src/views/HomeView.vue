@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <el-card class="box-card" shadow="hover">
+      <a class="linkCount">本站已有{{linksCount}}条链接</a>
       <el-tabs v-model="activeTab" @tab-click="changeTab">
         <el-tab-pane label="缩短网址" name="short">
           <el-input
@@ -92,6 +93,13 @@
 .box-input:nth-child(1) {
   margin-bottom: 20px;
 }
+
+.linkCount {
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #F0F0F2;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
 </style>
 
 <script>
@@ -109,9 +117,19 @@ export default {
       activeTab: "short",
       customShortUrl: "",
       API_BASE_URL,
+      linksCount: 0,
     };
   },
-  mounted() {},
+  computed: {
+  },
+  mounted() {
+    get("/shortlinks/count")
+      .then(res=>{
+        this.linksCount = res;
+      }).error(error => {
+        this.$alert("获取链接数量出错，请检查网络！");
+      })
+  },
   methods: {
     doShortUrl() {
       let data = {
