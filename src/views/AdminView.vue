@@ -9,7 +9,9 @@
         router
         :collapse="false"
       >
-      <div v-if="userName" style="width:100%"><el-button type="danger" @click="logout">登出</el-button></div>
+        <div v-if="userName" style="width: 100%">
+          <el-button type="danger" @click="logout">登出</el-button>
+        </div>
         <el-menu-item index="1" route="/user/list">
           <i class="el-icon-menu"></i>
           <span slot="title">用户管理</span>
@@ -73,9 +75,7 @@
       </el-menu>
     </div>
     <div class="content">
-      <h2 v-if="this.$route.path=='/admin'">
-      欢迎您，{{userName}} 
-      </h2>
+      <h2 v-if="this.$route.path == '/admin'">欢迎您，{{ userName }}</h2>
       <router-view></router-view>
     </div>
   </div>
@@ -102,30 +102,40 @@
 </style>
 
 <script>
+import { get } from "@/utils/request";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       userName: "",
-    }
+    };
   },
-  created() {
-    let user = localStorage.getItem("user")
-    if (user) {
-      let data = JSON.parse(user);
-      this.userName = data.userName;
-    }
+  created() {},
+  updated() {
+    // 临时方案，在子路由更新的时候向后端刷新状态
+    get("/shortlinks/auth/status")
+      .then((res) => {
+        if (res.data) {
+          localStorage.setItem("user", res.data);
+          this.userName = res.data;
+        }
+      })
+      .catch((error) => {
+        this.logout();
+      });
   },
-  methods:{
-    logout(){
-      localStorage.clear();
-      this.$message({
-          message: '登出成功',
-          type: 'success'
+  methods: {
+    logout() {
+      get("/shortlinks/auth/logout").then((res) => {
+        localStorage.clear();
+        this.$message({
+          message: "登出成功",
+          type: "success",
         });
+      });
       setTimeout(() => {
-      this.$router.go("/login")
+        this.$router.go("/login");
       }, 500);
     },
-  }
+  },
 };
 </script>

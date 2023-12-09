@@ -95,7 +95,7 @@ export default {
                   message: "登录成功",
                   type: "success",
                 });
-                localStorage.setItem("user", JSON.stringify(message.data));
+                localStorage.setItem("user", message.data);
                 this.$router.push("/admin");
               }
             })
