@@ -126,7 +126,7 @@ export default {
     get("/shortlinks/count")
       .then(res=>{
         this.linksCount = res;
-      }).error(error => {
+      }).catch(err => {
         this.$alert("获取链接数量出错，请检查网络！");
       })
   },
