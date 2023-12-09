@@ -1,4 +1,8 @@
-# short-links-view
+# 短链接前端（基于Vue）
+
+## 展示图
+
+![首页](.resource/images/home.png)
 
 ## Project setup
 ```
@@ -14,6 +18,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
