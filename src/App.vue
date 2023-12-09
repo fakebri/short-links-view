@@ -9,10 +9,9 @@
         <el-menu-item index="1"
           ><router-link to="/">主页</router-link></el-menu-item
         >
-        <el-menu-item index="2"
-          ><router-link to="/login">登录</router-link></el-menu-item
+        <el-menu-item index="2" :disabled="checkStatus"><router-link to="/login">登录</router-link></el-menu-item
         >
-        <el-menu-item index="3" disabled>管理面板</el-menu-item>
+        <el-menu-item index="3" :disabled="!checkStatus"><router-link to="/admin">管理面板</router-link></el-menu-item>
         <el-menu-item index="4"
           ><a :href="API_BASE_URL + '/swagger-ui/index.html'" target="_blank"
             >API文档</a
@@ -72,6 +71,14 @@ export default {
     return {
       API_BASE_URL,
     };
+  },
+  methods: {
+    
+  },
+  computed: {
+    checkStatus() {
+      return localStorage.getItem("user")!=null;
+    },
   },
   mounted() {
     let canvas = this.$refs.background;
